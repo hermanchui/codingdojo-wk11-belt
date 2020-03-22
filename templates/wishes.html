@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Wishing App</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h2 class="my-2 my-md-0 mr-md-4 col-md-6">Hello {{session['first_name']}}!</h2>
+            <a class="btn btn-outline-primary" href="/logout">Logout</a>
+            <a class="btn btn-primary offset-1" href="/wishes/stats">View stats</a>
+            <a class="btn btn-primary offset-1" href="/wishes/new">Make a wish!</a>
+        </div>
+
+        <div class="row">
+            {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                {% for message in messages %}            <!-- loop through the messages -->
+                <p>{{message}}</p>                       <!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endwith %}
+        </div>
+        
+        <h3>Your wish list:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Date added</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wish in wishes %}
+                <tr>
+                    <td>{{wish['item']}}</td>
+                    <td>{{wish['created_at'].strftime('%B %d, %Y')}}</td>
+                    <td>
+                        <a href="/wishes/remove/{{wish['id'] | string}}">Remove</a> |
+                        <a href="/wishes/edit/{{wish['id'] | string}}">Edit</a> |
+                        <a href="/wishes/grant/{{wish['id'] | string}}">Granted!</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h3>Granted wishes:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Wisher</th>
+                    <th>Date added</th>
+                    <th>Date Granted</th>
+                    <th>Likes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wish in granted %}
+                <tr>
+                    <td>{{wish['item']}}</td>
+                    <td>{{wish['first_name']}}</td>
+                    <td>{{wish['created_at'].strftime('%B %d, %Y')}}</td>
+                    <td>{{wish['granted_at'].strftime('%B %d, %Y')}}</td>
+                    <td>{{wish['likes']}}</td>
+                    <td><a href="/wishes/like/{{wish['id'] | string}}">Like</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

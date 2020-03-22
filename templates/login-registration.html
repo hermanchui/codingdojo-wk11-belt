@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>The Wishing App</title>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+                    <h1 class="my-0 mr-md-auto font-weight-normal">Welcome! Sign in to make a wish!</h1>
+            </div>
+            <div class="row">
+                {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+                    {% for message in messages %}            <!-- loop through the messages -->
+                    <p>{{message}}</p>                       <!-- display each message in a paragraph tag -->
+                    {% endfor %}
+                {% endwith %}
+            </div>
+            <div class="row">
+                <form action="/add-user" method="post" class="col-md-8 order-md-1">
+                    <h3>Register</h3>
+                    <hr>
+
+                    <div class="mb-3">
+                        <label for="fname">First Name</label>
+                        <input type="text" name="fname" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="lname">Last Name</label>
+                        <input type="text" name="lname" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmation">Confirm Password</label>
+                        <input type="password" name="confirmation" class="form-control">
+                    </div>
+                    
+                    <button class="btn btn-primary btn-md" type="submit">Register</button>
+                </form>
+                <form action="/login" method="post" class="col-md-4 order-md-2">
+                    <h3>Login</h3>
+                    <hr>
+
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+
+                    <button class="btn btn-primary btn-md" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
